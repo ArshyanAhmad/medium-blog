@@ -10,7 +10,6 @@ import axios from "axios";
 
 
 export const Signin = () => {
-
     const navigate = useNavigate();
 
     const [signinInputs, setSigninInputs] = useState<SigninInput>({
@@ -21,7 +20,13 @@ export const Signin = () => {
     const sendRequest = async (e: React.FormEvent) => {
         e.preventDefault()
 
+        if (!signinInputs.username || !signinInputs.password) {
+            return toast.warn("Please fill in all the required credentials before proceeding.");
+        }
+
         try {
+
+
             const res = await axios.post(`${BACKEND_URL}/api/v1/users/signin`, signinInputs)
             const data = res.data;
 
@@ -49,6 +54,7 @@ export const Signin = () => {
                         <form className="flex flex-col gap-4" onSubmit={sendRequest}>
 
                             <InputLabel
+                                value={signinInputs.username}
                                 onChange={(e) =>
                                     setSigninInputs((prev) => ({
                                         ...prev,
@@ -61,6 +67,7 @@ export const Signin = () => {
                             />
 
                             <InputLabel
+                                value={signinInputs.password}
                                 onChange={(e) =>
                                     setSigninInputs((prev) => ({
                                         ...prev,

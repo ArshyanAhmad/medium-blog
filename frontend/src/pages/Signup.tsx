@@ -20,7 +20,12 @@ export const Signup = () => {
     const sendRequest = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        if (!signupInputs.username || !signupInputs.password) {
+            return toast.warn("Please fill in all the required credentials before proceeding.");
+        }
+
         try {
+
             const res = await axios.post(
                 `${BACKEND_URL}/api/v1/users/signup`,
                 signupInputs
@@ -49,6 +54,7 @@ export const Signup = () => {
 
                         <form className="flex flex-col gap-4" onSubmit={sendRequest}>
                             <InputLabel
+                                value={signupInputs.name ? signupInputs.name : ""}
                                 onChange={(e) =>
                                     setSignupInputs((prev) => ({
                                         ...prev,
@@ -61,6 +67,8 @@ export const Signup = () => {
                             />
 
                             <InputLabel
+                                value={signupInputs.username}
+
                                 onChange={(e) =>
                                     setSignupInputs((prev) => ({
                                         ...prev,
@@ -73,6 +81,8 @@ export const Signup = () => {
                             />
 
                             <InputLabel
+                                value={signupInputs.password}
+
                                 onChange={(e) =>
                                     setSignupInputs((prev) => ({
                                         ...prev,
