@@ -34,7 +34,8 @@ export const Blogs = () => {
         );
     }
 
-    if (blogs.length === 0 || !token) {
+    if (blogs.length === 0 || !token || token == undefined) {
+
         return <NotAuthenticated />
     }
 
